@@ -15,3 +15,18 @@ echo "API Version: " . $apiVersion . "<br>";
 echo "Route: " . $apiRoute . "<br>";
 var_dump($apiArgs);
 echo "</pre>";
+
+$routes = [
+  [
+    'url' => '/v1/user/:id',
+    'methods' => ['get', 'put', 'delete']
+  ],
+  [
+    'url' => '/v1/user',
+    'methods' => ['post']
+  ],
+  [
+    'url' => '/v1/users',
+    'methods' => ['get', 'put', 'delete']
+  ]
+];
