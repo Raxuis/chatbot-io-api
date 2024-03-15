@@ -14,12 +14,12 @@ class Router
     $this->startController();
   }
 
-  private function setAvailableRoutes(array $availableRoutes): void
+  public function setAvailableRoutes(array $availableRoutes): void
   {
     $this->routes = $availableRoutes;
   }
 
-  private function setRoute(array $route): void
+  public function setRoute(array $route): void
   {
     $this->userRoute = $route;
   }
@@ -40,7 +40,7 @@ class Router
     return $this->userRoute;
   }
 
-  private function startController(): void
+  protected function startController(): void
   {
     echo "Votre route : " . print_r($this->getRoute(), true) . "<br/>";
     $this->getAvailableRoutes();
