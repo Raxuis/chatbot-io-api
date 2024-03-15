@@ -1,55 +1,35 @@
 <?php
 require 'vendor/autoload.php';
 
-$uriArgs = array_slice(explode("/", $_SERVER['REQUEST_URI']), 1);
-$apiVersion = isset($uriArgs[0]) ? $uriArgs[0] : "none";
-$apiRoute = isset($uriArgs[1]) ? $uriArgs[1] : "none";
-$apiArgs = array_slice($uriArgs, 2);
-$availableRoutes = "";
-$routes = [
+use App\Card;
+
+$card = new Card("Nom de l'inventeur du web ?", "Tim Berners-Lee");
+
+use App\Router;
+
+$router = new Router([
   [
     'url' => '/v1/user/:id',
-    'methods' => ['get', 'put', 'delete']
+    // 'methods' => ['get', 'put', 'delete']
   ],
-  // [
-  //   'url' => '/v1/user',
-  //   'methods' => ['post']
-  // ],
   [
     'url' => '/v1/users',
-    'methods' => ['get', 'put', 'delete']
+    // 'methods' => ['get', 'put', 'delete']
   ]
-];
+], array_slice(explode("/", $_SERVER['REQUEST_URI']), 1))
+?>
+<!DOCTYPE html>
+<html lang="en">
 
-foreach ($routes as $route) {
-  $baseUrl = "- localhost:8080";
-  $url = $route['url'][0] === '/' ? $route['url'] : '/' . $route['url'];
-  $availableRoutes .= $baseUrl . $url . " <br> ";
-}
-echo "Structures possibles de l'URL : <br>" . rtrim($availableRoutes, " <br>");
-echo "<pre><br>";
-echo "API Version: " . $apiVersion . "<br>";
-echo "Route: " . $apiRoute . "<br>";
-var_dump($apiArgs);
-echo "</pre>";
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affichage d'une instance de classe</title>
+</head>
 
+<body>
+  <?php var_dump($router->getRoute()) ?><br />
+  <?php var_dump($router->getAvailableRoutes()) ?>
+</body>
 
-
-$matchedRoute = null;
-
-foreach ($routes as $route) {
-  $pattern = str_replace('/', '\/', $route['url']);
-  $pattern = preg_replace('/:(\w+)/', '(\w+)', $pattern);
-  $pattern = "/^$pattern$/";
-
-  if (preg_match($pattern, $_SERVER['REQUEST_URI'], $matches) && in_array(strtolower($_SERVER['REQUEST_METHOD']), $route['methods'])) {
-    $matchedRoute = $route;
-    break;
-  }
-}
-
-if ($matchedRoute) {
-  echo "Route correspondante trouvée : <pre>" . print_r($matchedRoute, true) . "</pre>";
-} else {
-  echo "Aucune route correspondante trouvée.";
-}
+</html>

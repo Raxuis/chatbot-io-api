@@ -4,7 +4,11 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "ChatbotIo\\Api\\": "src/"
+      "ChatbotIo\\Api\\": "src/",
+      "App\\": [
+        "src/",
+        "app/"
+      ]
     }
   },
   "authors": [
