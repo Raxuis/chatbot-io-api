@@ -4,62 +4,59 @@ namespace App;
 
 class Router
 {
-  private array $routes = [];
-  private array $userRoute = [];
+  protected array $routes;
+  protected string $url;
 
-  public function __construct(array $availableRoutes = [], array $route = [])
+  public function __construct(array $routes)
   {
-    $this->setAvailableRoutes($availableRoutes);
-    $this->setRoute($route);
-    $this->startController();
+    $this->routes = $routes;
+    $this->url = $_SERVER['REQUEST_URI'];
+    $this->run();
   }
 
-  public function setAvailableRoutes(array $availableRoutes): void
+  protected function extractParams($url, $rule)
   {
-    $this->routes = $availableRoutes;
-  }
+    (array) $params = [];
+    (array) $urlParts = explode('/', trim($url, '/'));
+    (array) $ruleParts = explode('/', trim($rule, '/'));
 
-  public function setRoute(array $route): void
-  {
-    $this->userRoute = $route;
-  }
-
-  public function getAvailableRoutes()
-  {
-    $formattedRoutes = '';
-    foreach ($this->routes as $route) {
-      $baseUrl = "- localhost:8080";
-      $url = $route['url'][0] === '/' ? $route['url'] : '/' . $route['url'];
-      $formattedRoutes .= $baseUrl . $url . " <br> ";
-    }
-    echo 'Routes disponibles :<br/>' . rtrim($formattedRoutes, " <br>");
-  }
-
-  public function getRoute(): array
-  {
-    return $this->userRoute;
-  }
-
-  protected function startController(): void
-  {
-    echo "Votre route : " . print_r($this->getRoute(), true) . "<br/>";
-    $this->getAvailableRoutes();
-    echo '<br/>';
-    $matchedRoute = null;
-    foreach ($this->routes as $route) {
-      $pattern = str_replace('/', '\/', $route['url']);
-      $pattern = preg_replace('/:(\w+)/', '(\w+)', $pattern);
-      $pattern = "/^$pattern$/";
-
-      if (preg_match($pattern, $_SERVER['REQUEST_URI'], $matches)) {
-        $matchedRoute = $route;
-        break;
+    foreach ($ruleParts as $index => $rulePart) {
+      if (strpos($rulePart, ':') === 0 && isset($urlParts[$index])) {
+        $paramName = substr($rulePart, 1);
+        $params[$paramName] = $urlParts[$index];
       }
     }
-    if ($matchedRoute) {
-      echo "Route correspondante trouvée :<pre>" . print_r($matchedRoute, true) . "</pre>";
-    } else {
-      echo "Aucune route correspondante trouvée.";
+
+    return $params;
+  }
+
+  protected function matchRule($url, $rule)
+  {
+    (array) $urlParts = explode('/', trim($url, '/'));
+    (array) $ruleParts = explode('/', trim($rule, '/'));
+
+    if (count($urlParts) !== count($ruleParts)) {
+      return false;
+    }
+
+    foreach ($ruleParts as $index => $rulePart) {
+      if ($rulePart !== $urlParts[$index] && strpos($rulePart, ':') !== 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  protected function run()
+  {
+    (string) $url = parse_url($this->url, PHP_URL_PATH);
+
+    foreach ($this->routes as $route => $controller) {
+      if ($this->matchRule($url, $route)) {
+        (array) $params = $this->extractParams($url, $route);
+        var_dump($params);
+      }
     }
   }
 }

@@ -1,20 +1,14 @@
 <?php
+
 require 'vendor/autoload.php';
 
-
 use App\Router;
+use App\Controllers\User;
 
-$availableRoutes = [
-  [
-    'url' => '/v1/user/:id',
-    // 'methods' => ['get', 'put', 'delete']
-  ],
-  [
-    'url' => '/v1/users',
-    // 'methods' => ['get', 'put', 'delete']
-  ]
-];
-$router = new Router($availableRoutes, array_slice(explode("/", $_SERVER['REQUEST_URI']), 1));
+new Router([
+  'user/:id' => 'User',
+  'message/:id' => 'Message'
+]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
