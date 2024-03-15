@@ -4,25 +4,27 @@ namespace App;
 
 class Router
 {
-  public array $routes = [];
-  public array $userRoute = [];
+  private array $routes = [];
+  private array $userRoute = [];
 
-  public function __construct(array $availableRoutes = array(), array $route = array())
+  public function __construct(array $availableRoutes = [], array $route = [])
   {
     $this->setAvailableRoutes($availableRoutes);
     $this->setRoute($route);
-    $this->run();
+    $this->startController();
   }
 
-  private function setAvailableRoutes($availableRoutes)
+  private function setAvailableRoutes(array $availableRoutes): void
   {
     $this->routes = $availableRoutes;
   }
-  private function setRoute($route)
+
+  private function setRoute(array $route): void
   {
     $this->userRoute = $route;
   }
-  public function getAvailableRoutes()
+
+  public function getAvailableRoutes(): string
   {
     $formattedRoutes = '';
     foreach ($this->routes as $route) {
@@ -33,13 +35,14 @@ class Router
     return rtrim($formattedRoutes, " <br>");
   }
 
-  public function getRoute()
+  public function getRoute(): array
   {
     return $this->userRoute;
   }
-  public function startController()
+
+  private function startController(): void
   {
-    "Your route :" . print_r($this->getRoute()) . "<br/>";
+    echo "Votre route : " . print_r($this->getRoute(), true) . "<br/>";
     $matchedRoute = null;
     foreach ($this->routes as $route) {
       $pattern = str_replace('/', '\/', $route['url']);
@@ -52,14 +55,9 @@ class Router
       }
     }
     if ($matchedRoute) {
-      echo "Route correspondante trouvée :
-    <pre>" . print_r($matchedRoute, true) . "</pre>";
+      echo "Route correspondante trouvée :<pre>" . print_r($matchedRoute, true) . "</pre>";
     } else {
       echo "Aucune route correspondante trouvée.";
     }
-  }
-  private function run()
-  {
-    $this->startController();
   }
 }
