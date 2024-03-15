@@ -24,7 +24,7 @@ class Router
     $this->userRoute = $route;
   }
 
-  public function getAvailableRoutes(): string
+  public function getAvailableRoutes()
   {
     $formattedRoutes = '';
     foreach ($this->routes as $route) {
@@ -32,7 +32,7 @@ class Router
       $url = $route['url'][0] === '/' ? $route['url'] : '/' . $route['url'];
       $formattedRoutes .= $baseUrl . $url . " <br> ";
     }
-    return rtrim($formattedRoutes, " <br>");
+    echo 'Routes disponibles :<br/>' . rtrim($formattedRoutes, " <br>");
   }
 
   public function getRoute(): array
@@ -43,6 +43,8 @@ class Router
   private function startController(): void
   {
     echo "Votre route : " . print_r($this->getRoute(), true) . "<br/>";
+    $this->getAvailableRoutes();
+    echo '<br/>';
     $matchedRoute = null;
     foreach ($this->routes as $route) {
       $pattern = str_replace('/', '\/', $route['url']);
