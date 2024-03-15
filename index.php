@@ -1,19 +1,11 @@
 <?php
 require 'vendor/autoload.php';
 
-echo "Structure de l'URL : localhost:8080/v1/user/id";
-
 $uriArgs = array_slice(explode("/", $_SERVER['REQUEST_URI']), 1);
 $apiVersion = isset($uriArgs[0]) ? $uriArgs[0] : "none";
 $apiRoute = isset($uriArgs[1]) ? $uriArgs[1] : "none";
 $apiArgs = array_slice($uriArgs, 2);
-
-echo "<pre><br>";
-echo "API Version: " . $apiVersion . "<br>";
-echo "Route: " . $apiRoute . "<br>";
-var_dump($apiArgs);
-echo "</pre>";
-
+$availableRoutes = "";
 $routes = [
   [
     'url' => '/v1/user/:id',
@@ -28,6 +20,20 @@ $routes = [
     'methods' => ['get', 'put', 'delete']
   ]
 ];
+
+foreach ($routes as $route) {
+  $baseUrl = "- localhost:8080";
+  $url = $route['url'][0] === '/' ? $route['url'] : '/' . $route['url'];
+  $availableRoutes .= $baseUrl . $url . " <br> ";
+}
+echo "Structures possibles de l'URL : <br>" . rtrim($availableRoutes, " <br>");
+echo "<pre><br>";
+echo "API Version: " . $apiVersion . "<br>";
+echo "Route: " . $apiRoute . "<br>";
+var_dump($apiArgs);
+echo "</pre>";
+
+
 
 $matchedRoute = null;
 
