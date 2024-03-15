@@ -5,7 +5,7 @@ namespace App;
 class Router
 {
   public array $routes = [];
-  public array $route = [];
+  public array $userRoute = [];
 
   public function __construct(array $availableRoutes, array $route)
   {
@@ -19,7 +19,7 @@ class Router
   }
   private function setRoute($route)
   {
-    $this->route = $route;
+    $this->userRoute = $route;
   }
   public function getAvailableRoutes()
   {
@@ -34,6 +34,6 @@ class Router
 
   public function getRoute()
   {
-    return $this->route;
+    return $this->userRoute;
   }
 }
