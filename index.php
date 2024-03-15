@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 
 use App\Router;
 
-$availbaleRoutes = [
+$availableRoutes = [
   [
     'url' => '/v1/user/:id',
     // 'methods' => ['get', 'put', 'delete']
@@ -14,7 +14,7 @@ $availbaleRoutes = [
     // 'methods' => ['get', 'put', 'delete']
   ]
 ];
-$router = new Router($availbaleRoutes, array_slice(explode("/", $_SERVER['REQUEST_URI']), 1));
+$router = new Router($availableRoutes, array_slice(explode("/", $_SERVER['REQUEST_URI']), 1));
 ?>
 <!DOCTYPE html>
 <html lang="en">
