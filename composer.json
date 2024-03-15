@@ -1,17 +1,21 @@
 {
-    "name": "chatbot_io/api",
-    "description": "API for Chatbot-IO",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "ChatbotIo\\Api\\": "src/"
-        }
+  "name": "chatbot_io/api",
+  "description": "API for Chatbot-IO",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "ChatbotIo\\Api\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "BenoitPrmt",
+      "email": "benoitparmentier45@gmail.com"
     },
-    "authors": [
-        {
-            "name": "BenoitPrmt",
-            "email": "benoitparmentier45@gmail.com"
-        }
-    ],
-    "require": {}
+    {
+      "name": "Raxuis",
+      "email": "raclot.raphael@gmail.com"
+    }
+  ],
+  "require": {}
 }
