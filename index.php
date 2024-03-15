@@ -16,7 +16,7 @@ $router = new Router([
     'url' => '/v1/users',
     // 'methods' => ['get', 'put', 'delete']
   ]
-], array_slice(explode("/", $_SERVER['REQUEST_URI']), 1))
+], array_slice(explode("/", $_SERVER['REQUEST_URI']), 1));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,8 +28,6 @@ $router = new Router([
 </head>
 
 <body>
-  <?php var_dump($router->getRoute()) ?><br />
-  <?php var_dump($router->getAvailableRoutes()) ?>
 </body>
 
 </html>
