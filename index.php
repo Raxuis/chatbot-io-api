@@ -1,9 +1,6 @@
 <?php
 require 'vendor/autoload.php';
 
-use App\Card;
-
-$card = new Card("Nom de l'inventeur du web ?", "Tim Berners-Lee");
 
 use App\Router;
 
@@ -24,7 +21,7 @@ $router = new Router([
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Affichage d'une instance de classe</title>
+  <title>Chatbot IO API</title>
 </head>
 
 <body>
