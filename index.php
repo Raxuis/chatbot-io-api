@@ -3,9 +3,9 @@
 require 'vendor/autoload.php';
 
 
-use App\Router;
-use App\Controllers\User;
 use App\Controllers\Message;
+use App\Controllers\User;
+use App\Router;
 
 new Router([
   'user/:id' => User::class,

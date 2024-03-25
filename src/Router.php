@@ -2,27 +2,23 @@
 
 namespace App;
 
-class Router
-{
+class Router {
   protected array $routes;
   protected string $url;
-  protected bool $is404;
 
-  public function __construct(array $routes)
-  {
+  public function __construct(array $routes) {
     $this->routes = $routes;
     $this->url = $_SERVER['REQUEST_URI'];
     $this->run();
   }
 
-  protected function extractParams($url, $rule): array
-  {
+  protected function extractParams($url, $rule) {
     (array) $params = [];
     (array) $urlParts = explode('/', trim($url, '/'));
     (array) $ruleParts = explode('/', trim($rule, '/'));
 
     foreach ($ruleParts as $index => $rulePart) {
-      if (strpos($rulePart, ':') === 0 && isset ($urlParts[$index])) {
+      if (strpos($rulePart, ':') === 0 && isset($urlParts[$index])) {
         $paramName = substr($rulePart, 1);
         $params[$paramName] = $urlParts[$index];
       }
@@ -31,8 +27,7 @@ class Router
     return $params;
   }
 
-  protected function matchRule($url, $rule): bool
-  {
+  protected function matchRule($url, $rule) {
     (array) $urlParts = explode('/', trim($url, '/'));
     (array) $ruleParts = explode('/', trim($rule, '/'));
 
@@ -49,24 +44,29 @@ class Router
     return true;
   }
 
-  protected function run(): void
-  {
-    $this->is404 = false;
-
+  protected function run() {
+    (bool) $is404 = true;
     (string) $url = parse_url($this->url, PHP_URL_PATH);
 
     foreach ($this->routes as $route => $controller) {
       if ($this->matchRule($url, $route)) {
         (array) $params = $this->extractParams($url, $route);
         new $controller($params);
-      } else {
-        $this->is404 = true;
+
+        $is404 = false;
+
+        break;
       }
     }
-    if ($this->is404) {
+
+    if ($is404) {
+      header('Access-Control-Allow-Origin: *');
+      header('Content-type: application/json; charset=utf-8');
+      header("HTTP/1.0 404 Not Found");
+
       echo json_encode([
-        'message' => 'Not Found',
-        'code' => 404
+        'code' => '404',
+        'message' => 'Not Found'
       ]);
     }
   }
