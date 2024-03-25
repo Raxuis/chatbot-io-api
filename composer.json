@@ -8,7 +8,8 @@
       "App\\": [
         "src/",
         "app/"
-      ]
+      ],
+      "App\\Controllers\\": "src/controllers/"
     }
   },
   "authors": [
