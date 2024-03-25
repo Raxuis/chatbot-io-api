@@ -7,6 +7,6 @@ use App\Router;
 use App\Controllers\User;
 
 new Router([
-  'user/:id' => new User(),
+  'user/:id' => User::class,
   'message/:id' => 'Message'
 ]);
