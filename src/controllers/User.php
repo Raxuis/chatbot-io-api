@@ -63,7 +63,7 @@ class User
       header("HTTP/1.0 405 Method Not Allowed");
       echo json_encode([
         'message' => 'Method Not Allowed',
-        'code' => 405
+        'code' => '405'
       ]);
     }
   }
