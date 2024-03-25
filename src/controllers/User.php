@@ -2,11 +2,13 @@
 
 namespace App\Controllers;
 
-class User {
+class User
+{
 
   protected array $params;
 
-  public function __construct($params) {
+  public function __construct($params)
+  {
     $this->params = $params;
     $this->run();
   }
