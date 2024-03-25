@@ -23,14 +23,14 @@ class User
     ]);
   }
 
-  private function createUser(): void
+  private function postUser(): void
   {
     echo json_encode([
       'message' => 'Created !',
     ]);
   }
 
-  private function updateUser(): void
+  private function putUser(): void
   {
     echo json_encode([
       'message' => 'Updated !',
@@ -54,14 +54,11 @@ class User
   {
     $this->header();
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-      $this->getUser();
-    } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $this->createUser();
-    } else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-      $this->updateUser();
-    } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-      $this->deleteUser();
+    $requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
+    $method = $requestMethod . 'User';
+
+    if (method_exists($this, $method)) {
+      $this->$method();
     }
   }
 }
