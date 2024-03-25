@@ -13,7 +13,6 @@ class User {
 
   protected function run(): void
   {
-    var_dump($this->params);
-    echo 'user';
+    echo json_encode($this->params);
   }
 }
