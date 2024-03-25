@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Message {
+class Messages {
   protected array $params;
   protected string $reqMethod;
 
@@ -16,10 +16,30 @@ class Message {
   protected function getMessage(): array
   {
     return [
-      'message' => 'Bonjour ! Je viens de la base de données',
-      'username' => 'Mr. Robot',
-      'is_sender_bot' => true,
-      'send_at' => null
+      [
+        'message' => 'Bonjour ! Je viens de la base de données',
+        'username' => 'Mr. Robot',
+        'is_sender_bot' => true,
+        'send_at' => null
+      ],
+      [
+        'message' => 'Bonjour ! Je viens de la base de données',
+        'username' => 'Eliott Alderson',
+        'is_sender_bot' => false,
+        'send_at' => null
+      ],
+      [
+        'message' => 'Bonjour ! Je viens de la base de données',
+        'username' => 'Mr. Robot',
+        'is_sender_bot' => true,
+        'send_at' => null
+      ],
+      [
+        'message' => 'Bonjour ! Je viens de la base de données',
+        'username' => 'Eliott Alderson',
+        'is_sender_bot' => false,
+        'send_at' => null
+      ]
     ];
   }
 
