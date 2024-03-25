@@ -2,69 +2,53 @@
 
 namespace App\Controllers;
 
-class User
-{
-
+class User {
   protected array $params;
+  protected string $reqMethod;
 
-  public function __construct($params)
-  {
+  public function __construct($params) {
     $this->params = $params;
+    $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
+
     $this->run();
   }
 
-  private function getUser(): void
+  protected function getUser(): array
   {
-    echo json_encode([
+    return [
       'firstName' => 'Eliott',
       'lastName' => 'Alderson',
       'promo' => 'B1',
       'school' => 'Coda'
-    ]);
-  }
-
-  private function postUser(): void
-  {
-    echo json_encode([
-      'message' => 'Created !',
-    ]);
-  }
-
-  private function putUser(): void
-  {
-    echo json_encode([
-      'message' => 'Updated !',
-    ]);
-  }
-
-  private function deleteUser(): void
-  {
-    echo json_encode([
-      'message' => 'Deleted !',
-    ]);
+    ];
   }
 
   protected function header(): void
   {
-      header('Access-Control-Allow-Origin: *');
-      header("Content-type: application/json; charset=utf-8");
+    header('Access-Control-Allow-Origin: *');
+    header('Content-type: application/json; charset=utf-8');
+  }
+
+  protected function ifMethodExist(): void
+  {
+    $method = $this->reqMethod.'User';
+
+    if (method_exists($this, $method)) {
+      echo json_encode($this->$method());
+      return;
+    }
+
+    header("HTTP/1.0 404 Not Found");
+
+    echo json_encode([
+      'code' => '404',
+      'message' => 'Not Found'
+    ]);
   }
 
   protected function run(): void
   {
     $this->header();
-
-    $requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
-    $method = $requestMethod . 'User';
-
-    if (method_exists($this, $method)) {
-      $this->$method();
-    } else {
-      header("HTTP/1.0 405 Method Not Allowed");
-      echo json_encode([
-        'message' => 'Method Not Allowed',
-        'code' => '405'
-      ]);
-    }
+    $this->ifMethodExist();
   }
 }
