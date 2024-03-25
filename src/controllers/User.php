@@ -4,12 +4,16 @@ namespace App\Controllers;
 
 class User {
 
-  public function __construct() {
+  protected array $params;
+
+  public function __construct($params) {
+    $this->params = $params;
     $this->run();
   }
 
   protected function run(): void
   {
+    var_dump($this->params);
     echo 'user';
   }
 }
