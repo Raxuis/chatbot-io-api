@@ -2,11 +2,13 @@
 
 namespace App\Controllers;
 
-class Messages {
+class Messages
+{
   protected array $params;
   protected string $reqMethod;
 
-  public function __construct($params) {
+  public function __construct($params)
+  {
     $this->params = $params;
     $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
 
@@ -17,28 +19,13 @@ class Messages {
   {
     return [
       [
-        'message' => 'Bonjour ! Je viens de la base de données',
-        'username' => 'Mr. Robot',
-        'is_sender_bot' => true,
-        'send_at' => null
-      ],
-      [
-        'message' => 'Bonjour ! Je viens de la base de données',
-        'username' => 'Eliott Alderson',
-        'is_sender_bot' => false,
-        'send_at' => null
-      ],
-      [
-        'message' => 'Bonjour ! Je viens de la base de données',
-        'username' => 'Mr. Robot',
-        'is_sender_bot' => true,
-        'send_at' => null
-      ],
-      [
-        'message' => 'Bonjour ! Je viens de la base de données',
-        'username' => 'Eliott Alderson',
-        'is_sender_bot' => false,
-        'send_at' => null
+        'id' => '1',
+        'content' => 'Bonjour ! Je viens de la base de données',
+        'sender' => 'Mr. Robot',
+        'receiver' => 'Bot',
+        'avatar' => 'https://i.pinimg.com/736x/a3/b3/1a/a3b31a3d62d7643ebd97c49dc8c43ffa.jpg',
+        'image' => false,
+        'date' => 1711375196
       ]
     ];
   }
@@ -51,7 +38,7 @@ class Messages {
 
   protected function ifMethodExist(): void
   {
-    $method = $this->reqMethod.'Message';
+    $method = $this->reqMethod . 'Message';
 
     if (method_exists($this, $method)) {
       echo json_encode($this->$method());
