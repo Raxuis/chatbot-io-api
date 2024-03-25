@@ -11,8 +11,18 @@ class User {
     $this->run();
   }
 
+  private function getUser(): void
+  {
+    echo json_encode([
+      'firstName' => 'Eliott',
+      'lastName' => 'Alderson',
+      'promo' => 'B1',
+      'school' => 'Coda'
+    ]);
+  }
+
   protected function run(): void
   {
-    echo json_encode($this->params);
+    $this->getUser();
   }
 }
