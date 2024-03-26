@@ -26,7 +26,7 @@ class Messages
         'avatar' => 'https://i.pinimg.com/736x/a3/b3/1a/a3b31a3d62d7643ebd97c49dc8c43ffa.jpg',
         'image' => false,
         'date' => 1711375196
-      ]
+      ] 
     ];
   }
 
