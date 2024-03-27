@@ -9,7 +9,8 @@
         "src/",
         "app/"
       ],
-      "App\\Controllers\\": "src/controllers/"
+      "App\\Controllers\\": "src/controllers/",
+      "App\\Models\\": "src/models/"
     }
   },
   "authors": [
