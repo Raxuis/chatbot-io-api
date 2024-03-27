@@ -1,7 +1,6 @@
 <?php
 
 require 'vendor/autoload.php';
-//require 'core.php';
 
 use App\Controllers\Message;
 use App\Controllers\Messages;
