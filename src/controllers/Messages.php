@@ -20,11 +20,11 @@ class Messages
     return [
       [
         'id' => '1',
-        'content' => 'Bonjour ! Je viens de la base de données',
-        'sender' => 'Mr. Robot',
-        'receiver' => 'Bot',
+        'message' => 'Bonjour ! Je viens de la base de données',
+        'author' => 'Mr. Robot',
+        'bot' => true,
         'avatar' => 'https://i.pinimg.com/736x/a3/b3/1a/a3b31a3d62d7643ebd97c49dc8c43ffa.jpg',
-        'image' => false,
+        'image' => null,
         'date' => 1711375196
       ] 
     ];
