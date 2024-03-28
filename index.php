@@ -10,13 +10,18 @@ use App\Router;
 use App\Models\sql;
 use App\Models\UserModel;
 
-new sql([
+$userModel = new UserModel([
   'host' => '127.0.0.1',
   'port' => '8889',
   'dbname' => 'chatbot_io',
   'user' => 'root',
   'password' => 'root'
 ]);
+
+//$userModel->createUser([
+//  'email' => 'a@a.fr',
+//  'password' => 'password'
+//]);
 
 new Router([
   'user/:id' => User::class,

@@ -6,7 +6,7 @@ use App\Models\sql;
 
 class UserModel extends sql {
 
-  private object $db;
+  protected object $db;
 
   public function __construct(array $config) {
     parent::__construct($config);
