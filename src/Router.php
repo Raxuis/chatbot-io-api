@@ -62,7 +62,7 @@ class Router {
     if ($is404) {
       header('Access-Control-Allow-Origin: *');
       header('Content-type: application/json; charset=utf-8');
-      header("HTTP/1.0 404 Not Found");
+      header('HTTP/1.0 404 Not Found');
 
       echo json_encode([
         'code' => '404',

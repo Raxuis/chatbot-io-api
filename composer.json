@@ -4,10 +4,8 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "ChatbotIo\\Api\\": "src/",
       "App\\": [
-        "src/",
-        "app/"
+        "src/"
       ],
       "App\\Controllers\\": "src/controllers/",
       "App\\Models\\": "src/models/"
