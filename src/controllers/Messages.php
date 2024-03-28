@@ -2,32 +2,26 @@
 
 namespace App\Controllers;
 
+use App\Models\MessageModel;
+
 class Messages
 {
   protected array $params;
   protected string $reqMethod;
+  protected object $model;
 
   public function __construct($params)
   {
     $this->params = $params;
     $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
+    $this->model = new MessageModel();
 
     $this->run();
   }
 
-  protected function getMessage(): array
+  protected function getMessage()
   {
-    return [
-      [
-        'id' => '1',
-        'message' => 'Bonjour ! Je viens de la base de données',
-        'author' => 'Mr. Robot',
-        'bot' => true,
-        'avatar' => 'https://i.pinimg.com/736x/a3/b3/1a/a3b31a3d62d7643ebd97c49dc8c43ffa.jpg',
-        'image' => null,
-        'date' => 1711375196
-      ] 
-    ];
+    return $this->model->getAll();
   }
 
   protected function header(): void

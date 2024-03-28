@@ -2,44 +2,51 @@
 
 namespace App\Controllers;
 
-use App\Models\Usermodel;
+use App\Models\UserModel;
 
-class User {
+class User
+{
   protected array $params;
   protected string $reqMethod;
   protected object $model;
 
-  public function __construct($params) {
+  public function __construct($params)
+  {
     $this->params = $params;
     $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
-    $this->model = new Usermodel();
+    $this->model = new UserModel();
 
     $this->run();
   }
 
-  public function postUser() {
+  public function postUser()
+  {
     $body = (array) json_decode(file_get_contents('php://input'));
-    
+
     $this->model->add($body);
 
     return $this->model->getLast();
   }
 
-  public function deleteUser() {
+  public function deleteUser()
+  {
     return $this->model->delete(intval($this->params['id']));
   }
 
-  public function getUser() {
+  public function getUser()
+  {
     return $this->model->get(intval($this->params['id']));
   }
 
-  protected function header() {
+  protected function header()
+  {
     header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json; charset=utf-8');
   }
 
-  protected function ifMethodExist() {
-    $method = $this->reqMethod.'User';
+  protected function ifMethodExist()
+  {
+    $method = $this->reqMethod . 'User';
 
     if (method_exists($this, $method)) {
       echo json_encode($this->$method());
@@ -56,7 +63,8 @@ class User {
     return;
   }
 
-  protected function run() {
+  protected function run()
+  {
     $this->header();
     $this->ifMethodExist();
   }
