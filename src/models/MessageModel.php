@@ -23,14 +23,23 @@ class MessageModel extends SqlConnect
 
   public function get(int $id)
   {
-    $req = $this->db->prepare("SELECT * FROM messages WHERE id = :id");
+    $req = $this->db->prepare(
+      "SELECT * FROM messages as m
+      INNER JOIN users as u
+      ON m.user_id = u.id
+      WHERE u.id = :id"
+    );
     $req->execute(["id" => $id]);
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
   public function getAll()
   {
-    $req = $this->db->prepare("SELECT * FROM messages");
+    $req = $this->db->prepare(
+      "SELECT * FROM messages
+      INNER JOIN users
+      "
+    );
     $req->execute();
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
