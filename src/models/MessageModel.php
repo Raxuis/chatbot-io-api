@@ -38,7 +38,7 @@ class MessageModel extends SqlConnect
     $req = $this->db->prepare(
       "SELECT * FROM messages
       INNER JOIN users
-      "
+      ON messages.user_id = users.id"
     );
     $req->execute();
 
