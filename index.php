@@ -12,5 +12,6 @@ new Router([
   'user/:id' => User::class,
   'user' => User::class,
   'message/:id' => Message::class,
+  'message' => Message::class,
   'messages' => Messages::class
 ]);

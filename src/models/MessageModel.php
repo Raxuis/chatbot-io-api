@@ -9,7 +9,7 @@ class MessageModel extends SqlConnect
 {
   public function add(array $data): void
   {
-    $query = "INSERT INTO messages (user_id, message, image) VALUES (:user_id, :message, :image)";
+    $query = "INSERT INTO messages (user_id, message, image, date) VALUES (:user_id, :message, :image, :date)";
 
     $req = $this->db->prepare($query);
     $req->execute($data);
