@@ -24,9 +24,11 @@ class Messages
     return $this->model->getAll();
   }
 
-  protected function header(): void
+  protected function header()
   {
     header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: Content-Type");
+    header("Access-Control-Allow-Methods: PUT, DELETE, PATCH, POST, OPTIONS");
     header('Content-type: application/json; charset=utf-8');
   }
 
@@ -35,6 +37,7 @@ class Messages
     $method = $this->reqMethod . 'Message';
 
     if (method_exists($this, $method)) {
+      header("HTTP/1.1 200 OK");
       echo json_encode($this->$method());
       return;
     }
@@ -47,7 +50,7 @@ class Messages
     ]);
   }
 
-  protected function run(): void
+  protected function run()
   {
     $this->header();
     $this->ifMethodExist();

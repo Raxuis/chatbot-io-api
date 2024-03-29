@@ -39,25 +39,34 @@ class Message
 
   protected
     function run(
-  ): void {
+  ) {
     $this->header();
     $this->ifMethodExist();
   }
 
-  protected function header(): void
+  protected function header()
   {
     header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: Content-Type");
+    header("Access-Control-Allow-Methods: PUT, DELETE, PATCH, POST, OPTIONS");
     header('Content-type: application/json; charset=utf-8');
-    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-    header('Access-Control-Allow-Header: Content-Type');
   }
 
-  protected
-    function ifMethodExist(
-  ): void {
+  protected function ifMethodExist(): void
+  {
     $method = $this->reqMethod . 'Message';
 
+    if ($this->reqMethod === 'options') {
+      header('Access-Control-Allow-Origin: *');
+      header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+      header('Access-Control-Allow-Headers: Content-Type');
+      header('Access-Control-Max-Age: 86400');
+      header("HTTP/1.1 200 OK");
+      exit;
+    }
+
     if (method_exists($this, $method)) {
+      header("HTTP/1.0 200 OK");
       echo json_encode($this->$method());
       return;
     }
