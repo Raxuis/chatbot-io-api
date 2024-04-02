@@ -44,6 +44,14 @@ class UserModel extends SqlConnect
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
   }
 
+  public function getBot(int $id)
+  {
+    $req = $this->db->prepare("SELECT * FROM bots WHERE id = :id");
+    $req->execute(["id" => $id]);
+
+    return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
+  }
+
   public function getAllBots()
   {
     $req = $this->db->prepare("SELECT * FROM bots");

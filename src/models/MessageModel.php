@@ -33,17 +33,29 @@ class MessageModel extends SqlConnect
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
+
   public function getAll()
   {
     $req = $this->db->prepare(
-      "SELECT * FROM messages
-      INNER JOIN users
-      ON messages.user_id = users.id"
+      "SELECT messages.*, 
+            CASE 
+                WHEN u.id IS NULL THEN b.name
+                ELSE u.name
+            END AS name,
+            CASE 
+                WHEN u.id IS NULL THEN b.avatar
+                ELSE u.avatar
+            END AS avatar
+        FROM messages
+        LEFT JOIN users AS u ON messages.user_id = u.id
+        LEFT JOIN bots AS b ON messages.bot_id = b.id"
     );
     $req->execute();
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
   }
+
+
 
   public function getLast()
   {
