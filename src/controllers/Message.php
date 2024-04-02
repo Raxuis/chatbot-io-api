@@ -8,13 +8,13 @@ class Message
 {
   protected array $params;
   protected string $reqMethod;
-  protected object $model;
+  protected object $message;
 
   public function __construct($params)
   {
     $this->params = $params;
     $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
-    $this->model = new MessageModel();
+    $this->message = new MessageModel();
 
     $this->run();
   }
@@ -22,19 +22,19 @@ class Message
   {
     $body = (array) json_decode(file_get_contents('php://input'));
 
-    $this->model->add($body);
+    $this->message->add($body);
 
-    return $this->model->getLast();
+    return $this->message->getLast();
   }
 
   public function deleteMessage()
   {
-    return $this->model->delete(intval($this->params['id']));
+    return $this->message->delete(intval($this->params['id']));
   }
 
   public function getMessage()
   {
-    return $this->model->get(intval($this->params['id']));
+    return $this->message->get(intval($this->params['id']));
   }
 
   protected

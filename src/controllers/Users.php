@@ -8,13 +8,13 @@ class Users
 {
   protected array $params;
   protected string $reqMethod;
-  protected object $model;
+  protected object $users;
 
   public function __construct($params)
   {
     $this->params = $params;
     $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
-    $this->model = new UserModel();
+    $this->users = new UserModel();
 
     $this->run();
   }
@@ -23,19 +23,19 @@ class Users
   {
     $body = (array) json_decode(file_get_contents('php://input'));
 
-    $this->model->add($body);
+    $this->users->add($body);
 
-    return $this->model->getLast();
+    return $this->users->getLast();
   }
 
   public function deleteUsers()
   {
-    return $this->model->delete(intval($this->params['id']));
+    return $this->users->delete(intval($this->params['id']));
   }
 
   public function getUsers()
   {
-    return $this->model->getAll();
+    return $this->users->getAllUsers();
   }
 
   protected function header()

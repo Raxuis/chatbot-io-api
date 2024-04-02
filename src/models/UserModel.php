@@ -9,7 +9,7 @@ class UserModel extends SqlConnect
 {
   public function add(array $data): void
   {
-    $query = "INSERT INTO users (author, avatar, bot) VALUES (:author, :avatar, :bot)";
+    $query = "INSERT INTO users (name, avatar) VALUES (:name, :avatar)";
 
     $req = $this->db->prepare($query);
     $req->execute($data);
@@ -17,7 +17,7 @@ class UserModel extends SqlConnect
 
   public function addBot(array $data): void
   {
-    $query = "INSERT INTO users (author, avatar, bot) VALUES (:author, :avatar, 1)";
+    $query = "INSERT INTO bots (name, description, avatar, actions) VALUES (:name,:description, :avatar, :actions)";
 
     $req = $this->db->prepare($query);
     $req->execute($data);
@@ -36,7 +36,7 @@ class UserModel extends SqlConnect
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
-  public function getAll()
+  public function getAllUsers()
   {
     $req = $this->db->prepare("SELECT * FROM users");
     $req->execute();
@@ -46,7 +46,7 @@ class UserModel extends SqlConnect
 
   public function getAllBots()
   {
-    $req = $this->db->prepare("SELECT * FROM users WHERE bot = 1");
+    $req = $this->db->prepare("SELECT * FROM bots");
     $req->execute();
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();

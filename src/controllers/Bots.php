@@ -8,23 +8,23 @@ class Bots
 {
   protected array $params;
   protected string $reqMethod;
-  protected object $model;
+  protected object $bots;
 
   public function __construct($params)
   {
     $this->params = $params;
     $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
-    $this->model = new UserModel();
+    $this->bots = new UserModel();
 
     $this->run();
   }
   public function postBots()
   {
-    return $this->model->addBot();
+    return $this->bots->addBot();
   }
   public function getBots()
   {
-    return $this->model->getAllBots();
+    return $this->bots->getAllBots();
   }
 
   protected function header()

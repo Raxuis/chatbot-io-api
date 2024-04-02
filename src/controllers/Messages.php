@@ -8,20 +8,20 @@ class Messages
 {
   protected array $params;
   protected string $reqMethod;
-  protected object $model;
+  protected object $messages;
 
   public function __construct($params)
   {
     $this->params = $params;
     $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
-    $this->model = new MessageModel();
+    $this->messages = new MessageModel();
 
     $this->run();
   }
 
   protected function getMessages()
   {
-    return $this->model->getAll();
+    return $this->messages->getAll();
   }
 
   protected function header()
