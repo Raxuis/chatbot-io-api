@@ -22,7 +22,7 @@ class SqlConnect
     $this->password = 'root';
 
     $this->db = new PDO(
-      'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname,
+      'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname . ';charset=utf8mb4',
       $this->user,
       $this->password
     );

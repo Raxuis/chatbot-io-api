@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use \PDO;
+use PDO;
 use stdClass;
 
 class MessageModel extends SqlConnect
 {
   public function add(array $data): void
   {
-    $query = "INSERT INTO messages (user_id, message, image, date) VALUES (:user_id, :message, :image, :date)";
+    $query = "INSERT INTO messages (user_id, bot_id, message, image, date) VALUES (:user_id, :bot_id, :message, :image, UNIX_TIMESTAMP())";
 
     $req = $this->db->prepare($query);
     $req->execute($data);
@@ -34,7 +34,7 @@ class MessageModel extends SqlConnect
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
 
-  public function getAll()
+  public function getAll(): bool|array|stdClass
   {
     $req = $this->db->prepare(
       "SELECT messages.*, 
@@ -48,13 +48,13 @@ class MessageModel extends SqlConnect
             END AS avatar
         FROM messages
         LEFT JOIN users AS u ON messages.user_id = u.id
-        LEFT JOIN bots AS b ON messages.bot_id = b.id"
+        LEFT JOIN bots AS b ON messages.bot_id = b.id
+        ORDER BY id ASC"
     );
     $req->execute();
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
   }
-
 
 
   public function getLast()
