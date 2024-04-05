@@ -50,20 +50,16 @@ class Message
     header("Access-Control-Allow-Headers: Content-Type");
     header("Access-Control-Allow-Methods: PUT, DELETE, PATCH, POST, OPTIONS");
     header('Content-type: application/json; charset=utf-8');
+
+    if ($this->reqMethod === 'options') {
+      header('Access-Control-Max-Age: 86400');
+      exit;
+    }
   }
 
   protected function ifMethodExist(): void
   {
     $method = $this->reqMethod . 'Message';
-
-    if ($this->reqMethod === 'options') {
-      header('Access-Control-Allow-Origin: *');
-      header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-      header('Access-Control-Allow-Headers: Content-Type');
-      header('Access-Control-Max-Age: 86400');
-      header("HTTP/1.1 200 OK");
-      exit;
-    }
 
     if (method_exists($this, $method)) {
       header("HTTP/1.0 200 OK");
