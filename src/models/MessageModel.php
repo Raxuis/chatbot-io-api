@@ -23,6 +23,9 @@ class MessageModel extends SqlConnect
 
   public function get(int $id)
   {
+    if ($id < 0) {
+      return $this->getLastUserMessage(1);
+    }
     $req = $this->db->prepare(
       "SELECT * FROM messages as m
       INNER JOIN users as u
@@ -37,12 +40,12 @@ class MessageModel extends SqlConnect
   public function getAll(): bool|array|stdClass
   {
     $req = $this->db->prepare(
-      "SELECT messages.*, 
-            CASE 
+      "SELECT messages.*,
+            CASE
                 WHEN u.id IS NULL THEN b.name
                 ELSE u.name
             END AS name,
-            CASE 
+            CASE
                 WHEN u.id IS NULL THEN b.avatar
                 ELSE u.avatar
             END AS avatar
@@ -61,6 +64,12 @@ class MessageModel extends SqlConnect
   {
     $req = $this->db->prepare("SELECT * FROM messages ORDER BY id DESC LIMIT 1");
     $req->execute();
+
+    return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
+  }
+  public function getLastUserMessage(int $id) {
+    $req= $this->db->prepare("SELECT * FROM messages WHERE user_id = :user_id ORDER BY date DESC LIMIT 1");
+    $req->execute(["user_id" => $id]);
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
