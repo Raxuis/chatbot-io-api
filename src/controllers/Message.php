@@ -4,19 +4,15 @@ namespace App\Controllers;
 
 use App\Models\MessageModel;
 
-class Message
+class Message extends Controller
 {
-  protected array $params;
-  protected string $reqMethod;
   protected object $message;
 
   public function __construct($params)
   {
-    $this->params = $params;
-    $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
     $this->message = new MessageModel();
 
-    $this->run();
+    parent::__construct($params);
   }
   public function postMessage()
   {
