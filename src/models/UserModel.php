@@ -14,15 +14,6 @@ class UserModel extends SqlConnect
     $req = $this->db->prepare($query);
     $req->execute($data);
   }
-
-  public function addBot(array $data): void
-  {
-    $query = "INSERT INTO bots (name, description, avatar, actions) VALUES (:name,:description, :avatar, :actions)";
-
-    $req = $this->db->prepare($query);
-    $req->execute($data);
-  }
-
   public function delete(int $id): void
   {
     $req = $this->db->prepare("DELETE FROM users WHERE id = :id");
@@ -36,30 +27,23 @@ class UserModel extends SqlConnect
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
-  public function getAllUsers()
+  public function update(array $data)
+  {
+    $query = "UPDATE users SET name = :name, avatar = :avatar WHERE id = :id";
+    $req = $this->db->prepare($query);
+    $req->execute([
+      "id" => $data['id'],
+      "name" => $data['name'],
+      "avatar" => $data['avatar']
+    ]);
+  }
+  public function getAll()
   {
     $req = $this->db->prepare("SELECT * FROM users");
     $req->execute();
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
   }
-
-  public function getBot(int $id)
-  {
-    $req = $this->db->prepare("SELECT * FROM bots WHERE id = :id");
-    $req->execute(["id" => $id]);
-
-    return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
-  }
-
-  public function getAllBots()
-  {
-    $req = $this->db->prepare("SELECT * FROM bots");
-    $req->execute();
-
-    return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
-  }
-
   public function getLast()
   {
     $req = $this->db->prepare("SELECT * FROM users ORDER BY id DESC LIMIT 1");
