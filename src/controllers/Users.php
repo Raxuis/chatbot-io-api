@@ -31,6 +31,6 @@ class Users extends Controller
 
   public function getUsers()
   {
-    return $this->users->getAllUsers();
+    return $this->users->getAll();
   }
 }

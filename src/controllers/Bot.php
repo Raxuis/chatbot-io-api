@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Models\BotModel;
 
 class Bot extends Controller
 {
@@ -10,16 +10,16 @@ class Bot extends Controller
 
   public function __construct($params)
   {
-    $this->bot = new UserModel();
+    $this->bot = new BotModel();
 
     parent::__construct($params);
   }
   public function postBot()
   {
-    return $this->bot->addBot(intval($this->params['id']));
+    return $this->bot->add(intval($this->params['id']));
   }
   public function getBot()
   {
-    return $this->bot->getBot(intval($this->params['id']));
+    return $this->bot->get(intval($this->params['id']));
   }
 }

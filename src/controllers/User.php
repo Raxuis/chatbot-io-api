@@ -33,4 +33,12 @@ class User extends Controller
   {
     return $this->user->get(intval($this->params['id']));
   }
+  public function putUser()
+  {
+    $body = (array) json_decode(file_get_contents('php://input'));
+
+    $this->user->update($body);
+
+    return $this->user->getLast();
+  }
 }

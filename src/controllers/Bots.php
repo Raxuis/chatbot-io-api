@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Models\BotModel;
 
 class Bots extends Controller
 {
@@ -10,7 +10,7 @@ class Bots extends Controller
 
   public function __construct($params)
   {
-    $this->bots = new UserModel();
+    $this->bots = new BotModel();
 
     parent::__construct($params);
   }
@@ -20,6 +20,6 @@ class Bots extends Controller
   }
   public function getBots()
   {
-    return $this->bots->getAllBots();
+    return $this->bots->getAll();
   }
 }
